@@ -29,6 +29,7 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
     GroupMembersRequestMessageHandler GROUP_MEMBERS_HANDLER = new GroupMembersRequestMessageHandler();
     GroupQuitRequestMessageHandler GROUP_QUIT_HANDLER = new GroupQuitRequestMessageHandler();
     GroupChatRequestMessageHandler GROUP_CHAT_HANDLER = new GroupChatRequestMessageHandler();
+    TimeCheckHandler TIME_CHECK_HANDLER = new TimeCheckHandler();
     QuitHandler QUIT_HANDLER = new QuitHandler();
 
     @Override
@@ -44,6 +45,7 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
 
         ch.pipeline().addLast(new ProcotolFrameDecoder());
         ch.pipeline().addLast(LOGGING_HANDLER);
+        ch.pipeline().addLast(TIME_CHECK_HANDLER);
         ch.pipeline().addLast(MESSAGE_CODEC);
         // 用来判断是不是 读空闲时间过长，或 写空闲时间过长
         // 5s 内如果没有收到 channel 的数据，会触发一个 IdleState#READER_IDLE 事件
